@@ -73,17 +73,20 @@ formatted_df = pivot_df.sort_values(by=['Model', 'Subset']).set_index(['Model', 
 # Сохранение результатов в Excel
 formatted_df.to_excel("model_performance_metrics.xlsx")
 
-# Функция для прогнозирования диапазона цен на следующую неделю
+# Функция для прогнозирования диапазона цен на следующий месяц
 def forecast_prices(df, room_count):
     room_data = df[df['room_count'] == room_count]
     if room_data.empty:
         return f"No data for {room_count}-room apartments"
+    
     mean_price = room_data['price'].mean()
     std_dev = room_data['price'].std()
-    min_price = mean_price - std_dev
-    max_price = mean_price + std_dev
-    return f"Estimated price range for {room_count}-room apartments: {min_price:.2f} - {max_price:.2f}"
+    min_price = max(0, mean_price - 0.5 * std_dev)  # Уменьшаем диапазон и избегаем отрицательных значений
+    max_price = mean_price + 0.5 * std_dev
 
-# Прогнозирование диапазона цен на следующую неделю для 1-6 комнатных квартир
+    return f"Estimated price range for {room_count}-room apartments for the next month: {min_price:.2f} - {max_price:.2f}"
+
+# Прогнозирование диапазона цен на следующий месяц для 1-6 комнатных квартир
+
 for rooms in range(1, 7):
     print(forecast_prices(df_final, rooms))
