@@ -36,7 +36,9 @@
 ## Установка
 
 1. Клонируйте репозиторий на ваш локальный компьютер:
+
    git clone https://github.com/Deflow21/real_estate_forecasting_tool
+   
    cd real_estate_forecasting_tool
     
 
@@ -49,7 +51,7 @@
 
 Для запуска всего процесса обработки данных выполните скрипт main.py:
 
-sh python main.py
+python main.py
 
 ## Результаты и выводы
 
